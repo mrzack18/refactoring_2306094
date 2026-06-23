@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pertemuan10_2306094/models/product_model.dart';
 
@@ -31,18 +32,35 @@ class ProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 5),
+            product.image.isNotEmpty
+                ? Image.memory(
+                    base64Decode(product.image),
+                    width: 120,
+                    height: 120,
+                    fit: BoxFit.cover,
+                  )
+                : const Icon(Icons.image, size: 120),
+            const SizedBox(height: 5),
             Text("Rp. ${product.price}"),
             const SizedBox(height: 5),
-            Text(product.description),
+            Text(product.desc),
           ],
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.edit, color: Colors.orange),
-          onPressed: () => onEdit!(),
-        ),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete, color: Colors.red),
-          onPressed: () => onDelete!(),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (onEdit != null)
+              IconButton(
+                icon: const Icon(Icons.edit, color: Colors.green),
+                onPressed: () => onEdit!(),
+              ),
+            const SizedBox(width: 10),
+            if (onDelete != null)
+              IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () => onDelete!(),
+              ),
+          ],
         ),
       ),
     );

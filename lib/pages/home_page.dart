@@ -5,6 +5,7 @@ import '../models/product_model.dart';
 import 'login_page.dart';
 import '../widget/product_card.dart';
 import 'product_page.dart';
+import 'product_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,8 +38,8 @@ class _HomePageState extends State<HomePage> {
           .take(3)
           .map((item) => ProductModel.fromJson(item))
           .toList();
+      totalProducts = productList.length;
     });
-    totalProducts = products.length;
   }
 
   Future<void> getUser() async {
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -137,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.08),
+                              color: Colors.black.withValues(alpha: 0.08),
                               blurRadius: 8,
                             ),
                           ],
@@ -170,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => ProductPage()),
-                      );
+                      ).then((_) => loadProducts());
                     },
                     child: Text("Lihat Selengkapnya"),
                   ),
@@ -186,6 +187,16 @@ class _HomePageState extends State<HomePage> {
                         itemCount: products.length,
                         itemBuilder: (context, index) {
                           final product = products[index];
+                          return ProductCard(
+                            product: product,
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    ProductDetailPage(product: product),
+                              ),
+                            ).then((_) => loadProducts()),
+                          );
                         },
                       ),
               ),

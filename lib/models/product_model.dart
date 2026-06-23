@@ -2,32 +2,32 @@ import 'dart:convert';
 
 class ProductModel {
   final String name;
-  final String description;
-  final double price;
-  final String imageUrl;
+  final String desc;
+  final int price;
+  final String image;
 
   ProductModel({
     required this.name,
-    required this.description,
+    required this.desc,
     required this.price,
-    required this.imageUrl,
+    required this.image,
   });
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
       name: map['name'] ?? '',
-      description: map['description'] ?? '',
-      price: map['price'].toDouble() ?? 0.0,
-      imageUrl: map['imageUrl'] ?? '',
+      desc: map['desc'] ?? '',
+      price: map['price']?.toInt() ?? 0,
+      image: map['image'] ?? '',
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'description': description,
+      'desc': desc,
       'price': price,
-      'imageUrl': imageUrl,
+      'image': image,
     };
   }
 
@@ -38,6 +38,6 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel{name: $name, description: $description, price: $price, imageUrl: $imageUrl}';
+    return 'ProductModel{name: $name, desc: $desc, price: $price, image: $image}';
   }
 }
